@@ -1,2 +1,2 @@
-tasktracker
+Time Tracker AngularJS Application
 ===========
