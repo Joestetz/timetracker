@@ -165,7 +165,7 @@ app.get('/api', function(req, res) {
 { // periods
 	app.get('/api/periods', function(req, res) {
 		console.log("Retrieving all periods");
-		db.periods.find().limit(12).sort({ "startDate": 1}, function(err, collection) {
+		db.periods.find().limit(12).sort({ "startDate": -1}, function(err, collection) {
 			if (err || !collection) console.log("No periods found");
 			else
 			{

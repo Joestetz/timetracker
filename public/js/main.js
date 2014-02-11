@@ -88,11 +88,18 @@ timeTracker.config(['$routeProvider',
 		function($scope, PeriodsFactory, TimeFactory){
 			var populateTime = function(pid, onlyTasks) {
 				var time = TimeFactory.getByUserAndPeriod({uid: user2_id, pid: pid});
-				time.$promise.then(function(data) {
+				
+				return time.$promise.then(function(data) {
 					if (data.periods && data.periods[0].tasks.length > 0)
 					{
 						$scope.tasks = data.periods[0].tasks;
-						$scope.tasks.time.length = 0;
+						if (onlyTasks)
+						{
+							angular.forEach($scope.tasks, function(v,k) {
+								v.time.length = 0;
+								v.authHours = null;
+							});
+						}
 					} else {
 						$scope.tasks = null;
 					}
@@ -103,11 +110,14 @@ timeTracker.config(['$routeProvider',
 			period.$promise.then(function(data) {
 				$scope.periods = data;
 				$scope.period = data[0];
-				$scope.changePeriod();
+				populateTime($scope.period._id).then(function (){
+					if($scope.tasks == null)
+						populateTime($scope.periods[1]._id, true);
+				});
 			});
 			
 			$scope.changePeriod = function() {
-				
+				populateTime($scope.period._id);
 			};
 			
 			$scope.isError = function(task) {
