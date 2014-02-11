@@ -1,0 +1,50 @@
+[
+	{
+		"name": "Bereavement",
+		"description": "Bereavement"
+	},
+	{
+		"name": "Civic Responsibilities",
+		"description": "Civic Responsibilities"
+	},
+	{
+		"name": "Family & Medical Leave w/o Pay",
+		"description": "Family & Medical Leave w/o Pay"
+	},
+	{
+		"name": "Leave Sharing",
+		"description": "Leave Sharing"
+	},
+	{
+		"name": "Leave w/o Pay",
+		"description": "Leave w/o Pay"
+	},
+	{
+		"name": "Military Activation Leave",
+		"description": "Military Activation Leave"
+	},
+	{
+		"name": "Military Short Term Leave",
+		"description": "Military Short Term Leave"
+	},
+	{
+		"name": "Paid Time Off",
+		"description": "Paid Time Off"
+	},
+	{
+		"name": "Parental Leave",
+		"description": "Parental Leave"
+	},
+	{
+		"name": "Short Term Disability",
+		"description": "Short Term Disability"
+	},
+	{
+		"name": "Special Programs",
+		"description": "Special Programs"
+	},
+	{
+		"name": "Unworked Day",
+		"description": "Unworked Day"
+	}
+]

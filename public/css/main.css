@@ -1,0 +1,47 @@
+﻿
+/**************************************************
+ ** BEGIN Override Bootstrap Styles 
+ *************************************************/
+.container
+{
+	margin-left: 10px;
+	margin-right: 10px;
+	width: auto;
+}
+
+.navbar-fixed-top .container
+{
+	width: auto;
+}
+
+.modal > form
+{
+	margin: 0px;
+}
+
+/**************************************************
+ ** END Override Bootstrap Styles 
+ *************************************************/
+
+/**************************************************
+ ** BEGIN Custom Styles
+ *************************************************/
+
+.mainBodyDiv
+{
+	margin-top: 60px;
+}
+
+.red-tooltip + .tooltip > .tooltip-inner
+{
+	background-color: #ff3232;
+}
+.red-tooltip + .tooltip > .tooltip-arrow
+{
+	border-top-color: #ff3232;
+	border-bottom-color: #ff3232;
+}
+
+/**************************************************
+ ** END Custom Styles
+ *************************************************/

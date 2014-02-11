@@ -1,0 +1,13 @@
+<div ng-controller="testService">
+	<div ng-repeat="a in absenses">
+		Absense Name: {{ a.name }}
+		<br/>
+		Absense Description: {{ a.description }}
+		<br/>
+		Absense Id: {{ a._id }}
+		<br/><br/>
+	</div>
+	<div>total count: {{ absenses.length }}</div>
+	<input ng-model="selectedId" ng-change="changeSelected()"/>
+	<div>Selected: {{ selected.name }} &gt;&gt; {{ selected.description }}</div>
+</div>

@@ -1,0 +1,88 @@
+<div ng-controller="enterTimeController">
+	<div class="row-fluid">
+		<div class="span8">
+			<button type="button" class="btn btn-primary btn-small" data-toggle="modal" data-target="#addAbsenseModal">Add Absense</button>
+			<button type="button" class="btn btn-primary btn-small" data-toggle="modal" data-target="#addLaborModal">Add Labor</button>
+			<button type="button" class="btn btn-primary btn-small">Save</button>
+			<button type="button" class="btn btn-primary btn-small">Submit</button>
+		</div>
+		<div class="span4" style="text-align:right">
+			<select class="select" ng-model="period" ng-options="p.title for p in periods" ng-change="changePeriod()">
+			</select>
+		</div>
+	</div>
+	<div ng-hide="tasks" ng-cloak>
+		No tasks available for chosen period of work.
+	</div>
+	<table class="table table-condensed table-striped table-hover table-bordered" ng-show="tasks">
+		<thead>
+			<tr>
+				<th>Task Name</th>
+				<th>Task #</th>
+				<th ng-repeat="day in [] | dateInPeriod:period.days:period.startDate" style="width: 50px">{{day}}</th>
+				<th>Total Hours</th>
+				<th>Authorized Hours</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="task in tasks" ng-class="{ error: isError(task) }">
+				<td>{{task.taskName}}</td>
+				<td>{{task.uid}}</td>
+				<td ng-repeat="day in [] | range:period.days">{{task.time[day] | number:2}}</td>
+				<td>{{sumHoursTask(task) | number:2}}</td>
+				<td>{{task.authHours | number:2}}</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td ng-repeat="day in [] | range:period.days"><span ng-bind="sumHoursDay(day) | number:2"></span></td>
+				<td><span ng-bind="sumTotalHours() | number:2"></span></td>
+				<td><span ng-bind="sumAuthHours() | number:2"></span></td>
+			</tr>
+		</tbody>
+	</table>
+	<div id="addAbsenseModal" class="modal hide" role="dialog">
+		<form class="form-horizontal" ng-submit="addAbsense(absense.value, absense.label, absense.label)">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h3>Add Absense</h3>
+			</div>
+			<div class="modal-body">
+				<div class="control-group">
+					<label class="control-label" for="inputAbsenseType">Type</label>
+					<div class="controls">
+						<select class="select optional" id="inputAbsenseType" ng-model="absense" ng-options="a.name for a in absenses" size="12">
+							<option value="">-- Select One --</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal">Close</button>
+				<button type="submit" class="btn btn-primary" ng-disabled="absense == undefined">Add</button>
+			</div>
+		</form>
+	</div>
+	<div id="addLaborModal" class="modal hide" role="dialog">
+		<form class="form-horizontal" ng-submit="addLabor()">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h3>Add Labor</h3>
+			</div>
+			<div class="modal-body">
+				<div class="control-group">
+					<label class="control-label" for="inputLabor">Task</label>
+					<div class="controls">
+						<select class="select optional" id="inputLabor" ng-model="labor" ng-options="t.name + ' (' + t.id + ')' for t in tasks" size="12">
+							<option value="">-- Select One --</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal">Close</button>
+				<button type="submit" class="btn btn-primary" ng-disabled="labor == undefined">Add</button>
+			</div>
+		</form>
+	</div>
+</div>

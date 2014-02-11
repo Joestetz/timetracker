@@ -1,0 +1,5 @@
+mongoimport.exe -c absenses --file D:\Joe\Creative\Apps\TimeTracker\data\absenses.json --db ttdb --jsonArray
+mongoimport.exe -c periods --file D:\Joe\Creative\Apps\TimeTracker\data\periods.json --db ttdb --jsonArray
+mongoimport.exe -c users --file D:\Joe\Creative\Apps\TimeTracker\data\users.json --db ttdb --jsonArray
+mongoimport.exe -c tasks --file D:\Joe\Creative\Apps\TimeTracker\data\tasks.json --db ttdb --jsonArray
+mongoimport.exe -c time --file D:\Joe\Creative\Apps\TimeTracker\data\time.json --db ttdb --jsonArray

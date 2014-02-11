@@ -1,0 +1,54 @@
+[
+	{
+		"_id": {
+			"$oid": "52f6a54d4293916d8c8c280a"
+		},
+		"title": "June P1",
+		"startDate": {
+			"$date": 1370059200000
+		},
+		"endDate": {
+			"$date": 1371268800000
+		},
+		"days": 15
+	},
+	{
+		"_id": {
+			"$oid": "52f6a54d4293916d8c8c280b"
+		},
+		"title": "June P2",
+		"startDate": {
+			"$date": 1371355200000
+		},
+		"endDate": {
+			"$date": 1372564800000
+		},
+		"days": 15
+	},
+	{
+		"_id": {
+			"$oid": "52f6a54d4293916d8c8c280c"
+		},
+		"title": "July P1",
+		"startDate": {
+			"$date": 1372651200000
+		},
+		"endDate": {
+			"$date": 1373860800000
+		},
+		"days": 15
+	},
+	{
+		"_id": {
+			"$oid": "52f6a54d4293916d8c8c280d"
+		},
+		"title": "July P2",
+		"startDate": {
+			"$date": 1373947200000
+		},
+		"endDate": {
+			"$date": 1375243200000
+		},
+		"days": 16
+	}
+]
