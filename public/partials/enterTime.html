@@ -41,27 +41,7 @@
 			</tr>
 		</tbody>
 	</table>
-	<div id="addAbsenseModal" class="modal hide" role="dialog">
-		<form class="form-horizontal" ng-submit="addAbsense(absense.value, absense.label, absense.label)">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h3>Add Absense</h3>
-			</div>
-			<div class="modal-body">
-				<div class="control-group">
-					<label class="control-label" for="inputAbsenseType">Type</label>
-					<div class="controls">
-						<select class="select optional" id="inputAbsenseType" ng-model="absense" ng-options="a.name for a in absenses" size="12">
-							<option value="">-- Select One --</option>
-						</select>
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button class="btn" data-dismiss="modal">Close</button>
-				<button type="submit" class="btn btn-primary" ng-disabled="absense == undefined">Add</button>
-			</div>
-		</form>
+	<div id="addAbsenseModal" add-absense-modal>
 	</div>
 	<div id="addLaborModal" class="modal hide" role="dialog">
 		<form class="form-horizontal" ng-submit="addLabor()">
