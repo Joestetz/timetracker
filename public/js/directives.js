@@ -1,10 +1,10 @@
-timeTracker.directive('addAbsenseModal', ['AbsensesFactory', function(AbsensesFactory) {
+timeTracker.directive('addAbsenseModal', ['Api', 'ApiType', function(Api, ApiType) {
 	return {
 		restrict: 'A',
 		templateUrl: 'templates/addAbsenseForm.html',
 		replace: true,
 		link: function (scope, element, attrs) {
-			var absenses = AbsensesFactory.query();
+			var absenses = Api.call(ApiType.absenses).getAll();
 			absenses.$promise.then(function(data) {
 				scope.absenses = data;
 			});

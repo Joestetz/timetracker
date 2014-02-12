@@ -84,10 +84,10 @@ timeTracker.config(['$routeProvider',
 		}
 	]);
 
-	timeTracker.controller('enterTimeController', ['$scope', 'PeriodsFactory', 'TimeFactory',
-		function($scope, PeriodsFactory, TimeFactory){
+	timeTracker.controller('enterTimeController', ['$scope', 'Api', 'ApiType',
+		function($scope, Api, ApiType){
 			var populateTime = function(pid, onlyTasks) {
-				var time = TimeFactory.getByUserAndPeriod({uid: user2_id, pid: pid});
+				var time = Api.call(ApiType.time).getById({uid: user2_id, pid: pid});
 				
 				return time.$promise.then(function(data) {
 					if (data.periods && data.periods[0].tasks.length > 0)
@@ -105,8 +105,8 @@ timeTracker.config(['$routeProvider',
 					}
 				});
 			};
-		
-			var period = PeriodsFactory.query();
+			
+			var period = Api.call(ApiType.periods).getAll();
 			period.$promise.then(function(data) {
 				$scope.periods = data;
 				$scope.period = data[0];
@@ -180,16 +180,16 @@ timeTracker.config(['$routeProvider',
 		}
 	]);
 
-	timeTracker.controller('testService', ['$scope', 'AbsensesFactory', 'AbsenseFactory',
-		function($scope, AbsensesFactory, AbsenseFactory) {
-			$scope.absenses = AbsensesFactory.query();
+	timeTracker.controller('testService', ['$scope', 'Api', 'ApiType',
+		function($scope, Api, ApiType) {			
+			$scope.absenses = Api.call(ApiType.absenses).getAll();
 			
 			$scope.changeSelected = function() {
-				var a = AbsenseFactory.show({id: $scope.selectedId});
+				var a = Api.call(ApiType.absenses).getById({id: $scope.selectedId});
 				a.$promise.then(function(data) {
 					$scope.selected = data;
 				});
-			}
+			};
 		}
 	]);
 }
