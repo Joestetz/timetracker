@@ -308,7 +308,7 @@ app.get('/api', function(req, res) {
 		{
 			console.log("Retrieving time for user '" + uid + "' and period '" + pid + "'");
 			db.time.findOne({"user_id": ObjectId(uid)}, {
-				"_id": 0,
+				"_id": 1,
 				"periods": { $elemMatch: { "period_id": ObjectId(pid) } }
 			}, function(err, item) {
 				res.send(item);
@@ -356,7 +356,7 @@ app.get('/api', function(req, res) {
 			query: {"_id": ObjectId(id)},
 			update: entry,
 			new: true
-		}, function(err, item){
+		}, function(err, item, lastErrorObject){
 			if(err) {
 				console.log("Error occurred on update");
 				res.send({"error": "Error occurred on update"});
@@ -365,6 +365,23 @@ app.get('/api', function(req, res) {
 				res.send(item);
 			}
 		});
+		
+		/*
+		db.time.findAndModify({ 
+			query: { 
+				"_id": ObjectId("52f7928b4293916d8c8c282a"),
+				"periods.period_id": ObjectId("52f6a54d4293916d8c8c280d")
+			},
+			update: {
+				"$push": 
+					"periods.$.tasks": {
+						"task_id": "blah",
+						"taskName": "blah"
+					}
+			},
+			new: true
+		});
+		*/
 	});
 
 	app.delete('/api/time/:id', function(req, res) {

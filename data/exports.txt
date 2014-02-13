@@ -2,4 +2,4 @@ mongoexport.exe --db ttdb --collection absenses --out D:\Joe\Creative\Apps\TimeT
 mongoexport.exe --db ttdb --collection periods --out D:\Joe\Creative\Apps\TimeTracker\data\periods_out.json --jsonArray
 mongoexport.exe --db ttdb --collection users --out D:\Joe\Creative\Apps\TimeTracker\data\users_out.json --jsonArray
 mongoexport.exe --db ttdb --collection tasks --out D:\Joe\Creative\Apps\TimeTracker\data\tasks_out.json --jsonArray
-mongoexport.exe --db ttdb --collection time --out D:\Joe\Creative\Apps\TimeTracker\data\time_out.json --jsonArray
+mongoexport.exe --db ttdb --collection time --out D:\Joe\Creative\Git\timetracker\data\time_out.json --jsonArray

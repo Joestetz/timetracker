@@ -93,6 +93,7 @@ timeTracker.config(['$routeProvider',
 					if (data.periods && data.periods[0].tasks.length > 0)
 					{
 						$scope.tasks = data.periods[0].tasks;
+						$scope.taskObj = data;
 						if (onlyTasks)
 						{
 							angular.forEach($scope.tasks, function(v,k) {

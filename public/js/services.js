@@ -34,9 +34,14 @@ services.factory('Api', function($resource) {
 			return entity().show(params);
 		};
 		
+		var updateFn = function(params) {
+			return entity().update(params);
+		};
+		
 		return {
 			getAll: queryFn,
-			getById: showFn
+			getById: showFn,
+			update: updateFn
 		};
 	};
 	
