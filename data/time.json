@@ -1,178 +1,158 @@
 [
 	{
 		"_id": {
-			"$oid": "52f7928b4293916d8c8c282a"
+			"$oid": "5302ad1812454178ab374c7d"
 		},
 		"user_id": {
 			"$oid": "52f78c914293916d8c8c281b"
 		},
-		"taskBank": [
+		"period_id": {
+			"$oid": "52f6a54d4293916d8c8c280b"
+		},
+		"tasks": [
 			{
 				"task_id": {
 					"$oid": "52f78dcf4293916d8c8c281d"
-				}
+				},
+				"taskName": "Task Name 00",
+				"taskDescription": "Description 00",
+				"uid": "B01000000000000000000",
+				"time": [
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2
+				],
+				"authHours": 40
 			},
 			{
 				"task_id": {
 					"$oid": "52f78dcf4293916d8c8c2820"
-				}
+				},
+				"taskName": "Task Name 03",
+				"taskDescription": "Description 03",
+				"uid": "B01000000000000000003",
+				"time": [
+					3,
+					3,
+					3,
+					3,
+					3,
+					3,
+					3,
+					3,
+					3,
+					3,
+					3,
+					3,
+					3,
+					3,
+					3
+				],
+				"authHours": 40
 			},
 			{
 				"task_id": {
 					"$oid": "52f78dcf4293916d8c8c2821"
-				}
+				},
+				"taskName": "Task Name 04",
+				"taskDescription": "Description 04",
+				"uid": "B01000000000000000004",
+				"time": [
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2
+				],
+				"authHours": 40
 			},
 			{
 				"task_id": {
 					"$oid": "52f78dcf4293916d8c8c2824"
-				}
+				},
+				"taskName": "Task Name 07",
+				"taskDescription": "Description 07",
+				"uid": "B01000000000000000007",
+				"time": [
+					1,
+					1,
+					1,
+					1,
+					1,
+					1,
+					1,
+					1,
+					1,
+					1,
+					1,
+					1,
+					1,
+					1,
+					1
+				],
+				"authHours": 20
 			}
-		],
-		"periods": [
+		]
+	},
+	{
+		"_id": {
+			"$oid": "5302ad1812454178ab374c7e"
+		},
+		"user_id": {
+			"$oid": "52f78c914293916d8c8c281b"
+		},
+		"period_id": {
+			"$oid": "52f6a54d4293916d8c8c280d"
+		},
+		"tasks": [
 			{
-				"period_id": {
-					"$oid": "52f6a54d4293916d8c8c280b"
+				"task_id": {
+					"$oid": "52f78dcf4293916d8c8c281d"
 				},
-				"tasks": [
-					{
-						"task_id": {
-							"$oid": "52f78dcf4293916d8c8c281d"
-						},
-						"taskName": "Task Name 00",
-						"taskDescription": "Description 00",
-						"uid": "B01000000000000000000",
-						"time": [
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2
-						],
-						"authHours": 40
-					},
-					{
-						"task_id": {
-							"$oid": "52f78dcf4293916d8c8c2820"
-						},
-						"taskName": "Task Name 03",
-						"taskDescription": "Description 03",
-						"uid": "B01000000000000000003",
-						"time": [
-							3,
-							3,
-							3,
-							3,
-							3,
-							3,
-							3,
-							3,
-							3,
-							3,
-							3,
-							3,
-							3,
-							3,
-							3
-						],
-						"authHours": 40
-					},
-					{
-						"task_id": {
-							"$oid": "52f78dcf4293916d8c8c2821"
-						},
-						"taskName": "Task Name 04",
-						"taskDescription": "Description 04",
-						"uid": "B01000000000000000004",
-						"time": [
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2
-						],
-						"authHours": 40
-					},
-					{
-						"task_id": {
-							"$oid": "52f78dcf4293916d8c8c2824"
-						},
-						"taskName": "Task Name 07",
-						"taskDescription": "Description 07",
-						"uid": "B01000000000000000007",
-						"time": [
-							1,
-							1,
-							1,
-							1,
-							1,
-							1,
-							1,
-							1,
-							1,
-							1,
-							1,
-							1,
-							1,
-							1,
-							1
-						],
-						"authHours": 20
-					}
-				]
-			},
-			{
-				"period_id": {
-					"$oid": "52f6a54d4293916d8c8c280d"
-				},
-				"tasks": [
-					{
-						"task_id": {
-							"$oid": "52f78dcf4293916d8c8c281d"
-						},
-						"taskName": "Task Name 00",
-						"taskDescription": "Description 00",
-						"uid": "B01000000000000000000",
-						"time": [
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2,
-							2.5
-						],
-						"authHours": 40
-					}
-				]
+				"taskName": "Task Name 00",
+				"taskDescription": "Description 00",
+				"uid": "B01000000000000000000",
+				"time": [
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2,
+					2.5
+				],
+				"authHours": 40
 			}
 		]
 	}

@@ -41,28 +41,6 @@
 			</tr>
 		</tbody>
 	</table>
-	<div id="addAbsenseModal" add-absense-modal>
-	</div>
-	<div id="addLaborModal" class="modal hide" role="dialog">
-		<form class="form-horizontal" ng-submit="addLabor()">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h3>Add Labor</h3>
-			</div>
-			<div class="modal-body">
-				<div class="control-group">
-					<label class="control-label" for="inputLabor">Task</label>
-					<div class="controls">
-						<select class="select optional" id="inputLabor" ng-model="labor" ng-options="t.name + ' (' + t.id + ')' for t in tasks" size="12">
-							<option value="">-- Select One --</option>
-						</select>
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button class="btn" data-dismiss="modal">Close</button>
-				<button type="submit" class="btn btn-primary" ng-disabled="labor == undefined">Add</button>
-			</div>
-		</form>
-	</div>
+	<div id="addAbsenseModal" add-absense-modal></div>
+	<div id="addLaborModal" add-labor-modal></div>
 </div>
