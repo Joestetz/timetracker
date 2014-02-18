@@ -87,13 +87,12 @@ timeTracker.config(['$routeProvider',
 	timeTracker.controller('enterTimeController', ['$scope', 'Api', 'ApiType',
 		function($scope, Api, ApiType){
 			var populateTime = function(pid, onlyTasks) {
-				var time = Api.call(ApiType.time).getById({uid: user2_id, pid: pid});
+				var time = Api.call(ApiType.time).getByParams({user: user2_id, period: pid});
 				
 				return time.$promise.then(function(data) {
-					if (data.periods && data.periods[0].tasks.length > 0)
+					if (data.tasks && data.tasks.length > 0)
 					{
-						$scope.tasks = data.periods[0].tasks;
-						$scope.taskObj = data;
+						$scope.tasks = data.tasks;
 						if (onlyTasks)
 						{
 							angular.forEach($scope.tasks, function(v,k) {

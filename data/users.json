@@ -1,17 +1,77 @@
 [
 	{
+		"_id": {
+			"$oid": "52f78c914293916d8c8c281a"
+		},
 		"name": "User 1",
 		"login": "user1",
-		"password": "P@ssw0rd"
+		"password": "P@ssw0rd",
+		"taskBank": [
+			{
+				"task_id": {
+					"$oid": "52f78dcf4293916d8c8c281d"
+				}
+			},
+			{
+				"task_id": {
+					"$oid": "52f78dcf4293916d8c8c2820"
+				}
+			},
+			{
+				"task_id": {
+					"$oid": "52f78dcf4293916d8c8c2821"
+				}
+			},
+			{
+				"task_id": {
+					"$oid": "52f78dcf4293916d8c8c2824"
+				}
+			}
+		]
 	},
 	{
+		"_id": {
+			"$oid": "52f78c914293916d8c8c281b"
+		},
 		"name": "User 2",
 		"login": "user2",
-		"password": "P@ssw0rd"
+		"password": "P@ssw0rd",
+		"taskBank": [
+			{
+				"task_id": {
+					"$oid": "52f78dcf4293916d8c8c281d"
+				}
+			},
+			{
+				"task_id": {
+					"$oid": "52f78dcf4293916d8c8c2820"
+				}
+			},
+			{
+				"task_id": {
+					"$oid": "52f78dcf4293916d8c8c2821"
+				}
+			},
+			{
+				"task_id": {
+					"$oid": "52f78dcf4293916d8c8c2824"
+				}
+			}
+		]
 	},
 	{
+		"_id": {
+			"$oid": "52f78c914293916d8c8c281c"
+		},
 		"name": "User 3",
 		"login": "user3",
-		"password": "P@ssw0rd"
+		"password": "P@ssw0rd",
+		"taskBank": [
+			{
+				"task_id": {
+					"$oid": "52f78dcf4293916d8c8c2824"
+				}
+			}
+		]
 	}
 ]

@@ -14,7 +14,8 @@ services.factory('Api', function($resource) {
 		var collection = function() {
 			return $resource(baseUrl, {}, {
 				query: { method: "GET", isArray: true },
-				create: { method: "POST" }
+				create: { method: "POST" },
+				getByParams: { method: "GET" }
 			});	
 		};
 		
@@ -38,10 +39,15 @@ services.factory('Api', function($resource) {
 			return entity().update(params);
 		};
 		
+		var getByParamsFn = function(params) {
+			return collection().getByParams(params);
+		};
+		
 		return {
 			getAll: queryFn,
 			getById: showFn,
-			update: updateFn
+			update: updateFn,
+			getByParams: getByParamsFn
 		};
 	};
 	

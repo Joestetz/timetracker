@@ -1,8 +1,7 @@
 // Absense model
 
 var mongoose = require('mongoose'),
-	Schema = mongoose.Schema,
-	ObjectId = mongoose.ObjectId;
+	Schema = mongoose.Schema;
 	
 var absenseSchema = new Schema({
 	name: String,
