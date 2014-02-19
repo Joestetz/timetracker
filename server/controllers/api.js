@@ -50,13 +50,26 @@ exports.getPeriodById = function(req, res) {
 
 // Task
 exports.getAllTasks = function(req, res) {
-	console.log("Getting all tasks");
-	Task.find(function(err, tasks) {
-		if(!err)
-			res.send(tasks);
-		else
-			console.log(err);
-	});
+	var ids = req.query.ids;
+	
+	if(ids)
+	{
+		console.log("Getting tasks with matching IDs");
+		Task.find({ '_id': { $in: ids }}, function(err, tasks) {
+			if(!err)
+				res.send(tasks);
+			else
+				console.log(err);
+		});
+	} else {
+		console.log("Getting all tasks");
+		Task.find(function(err, tasks) {
+			if(!err)
+				res.send(tasks);
+			else
+				console.log(err);
+		});
+	}
 }
 
 exports.getTaskById = function(req, res) {
@@ -73,6 +86,18 @@ exports.getTaskById = function(req, res) {
 exports.getTimeForUserAndPeriod = function(req, res) {
 	console.log("Getting time for user " + req.query.user + " and period " + req.query.period);
 	Time.findOne({ user_id: req.query.user, period_id: req.query.period }, function(err, time) {
+		if(!err)
+		{
+			res.send(time);
+		}
+		else
+			console.log(err);
+	});
+}
+
+exports.updateTime = function(req, res) {
+	console.log("Updating " + req.params.id + ": " + JSON.stringify(req.body));
+	Time.findOneAndUpdate({ _id: req.params.id }, req.body, function(err, time) {
 		if(!err)
 		{
 			res.send(time);

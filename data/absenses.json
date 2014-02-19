@@ -4,83 +4,95 @@
 			"$oid": "52f69f994293916d8c8c27fe"
 		},
 		"name": "Bereavement",
-		"description": "Bereavement"
+		"description": "Bereavement",
+		"uid": "G01234000000000000001"
 	},
 	{
 		"_id": {
 			"$oid": "52f69f994293916d8c8c27ff"
 		},
 		"name": "Civic Responsibilities",
-		"description": "Civic Responsibilities"
+		"description": "Civic Responsibilities",
+		"uid": "G01234000000000000002"
 	},
 	{
 		"_id": {
 			"$oid": "52f69f994293916d8c8c2800"
 		},
 		"name": "Family & Medical Leave w/o Pay",
-		"description": "Family & Medical Leave w/o Pay"
+		"description": "Family & Medical Leave w/o Pay",
+		"uid": "G01234000000000000003"
 	},
 	{
 		"_id": {
 			"$oid": "52f69f994293916d8c8c2801"
 		},
 		"name": "Leave Sharing",
-		"description": "Leave Sharing"
+		"description": "Leave Sharing",
+		"uid": "G01234000000000000004"
 	},
 	{
 		"_id": {
 			"$oid": "52f69f994293916d8c8c2802"
 		},
 		"name": "Leave w/o Pay",
-		"description": "Leave w/o Pay"
+		"description": "Leave w/o Pay",
+		"uid": "G01234000000000000005"
 	},
 	{
 		"_id": {
 			"$oid": "52f69f994293916d8c8c2803"
 		},
 		"name": "Military Activation Leave",
-		"description": "Military Activation Leave"
+		"description": "Military Activation Leave",
+		"uid": "G01234000000000000006"
 	},
 	{
 		"_id": {
 			"$oid": "52f69f994293916d8c8c2804"
 		},
 		"name": "Military Short Term Leave",
-		"description": "Military Short Term Leave"
+		"description": "Military Short Term Leave",
+		"uid": "G01234000000000000007"
 	},
 	{
 		"_id": {
 			"$oid": "52f69f994293916d8c8c2805"
 		},
 		"name": "Paid Time Off",
-		"description": "Paid Time Off"
+		"description": "Paid Time Off",
+		"uid": "G01234000000000000008"
 	},
 	{
 		"_id": {
 			"$oid": "52f69f994293916d8c8c2806"
 		},
 		"name": "Parental Leave",
-		"description": "Parental Leave"
+		"description": "Parental Leave",
+		"uid": "G01234000000000000009"
 	},
 	{
 		"_id": {
 			"$oid": "52f69f994293916d8c8c2807"
 		},
 		"name": "Short Term Disability",
-		"description": "Short Term Disability"
+		"description": "Short Term Disability",
+		"uid": "G01234000000000000010"
 	},
 	{
 		"_id": {
 			"$oid": "52f69f994293916d8c8c2808"
 		},
 		"name": "Special Programs",
-		"description": "Special Programs"
+		"description": "Special Programs",
+		"uid": "G01234000000000000011"
 	},
 	{
 		"_id": {
 			"$oid": "52f69f994293916d8c8c2809"
 		},
 		"name": "Unworked Day",
-		"description": "Unworked Day"
+		"description": "Unworked Day",
+		"uid": "G01234000000000000012"
 	}
 ]

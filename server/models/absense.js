@@ -5,7 +5,8 @@ var mongoose = require('mongoose'),
 	
 var absenseSchema = new Schema({
 	name: String,
-	description: String
+	description: String,
+	uid: String
 });
 
 module.exports = mongoose.model('Absense', absenseSchema);
