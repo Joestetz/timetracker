@@ -17,6 +17,7 @@
 	<table class="table table-condensed table-striped table-hover table-bordered" ng-show="tasks">
 		<thead>
 			<tr>
+				<th style="width: 50px;">Actions</th>
 				<th>Task Name</th>
 				<th>Task #</th>
 				<th ng-repeat="day in [] | dateInPeriod:period.days:period.startDate" style="width: 40px; text-align:center;">{{day}}</th>
@@ -26,6 +27,7 @@
 		</thead>
 		<tbody>
 			<tr ng-repeat="task in tasks" ng-class="{ error: isError(task) }">
+				<td style="text-align: center;"><a class="btn btn-mini" title="Delete" tooltip ng-click="deleteTime(task.task_id)"><i class="icon-trash"></i></a></td>
 				<td>{{task.taskName}}</td>
 				<td>{{task.uid}}</td>
 				<td ng-repeat="day in [] | range:period.days">{{task.time[day] ? task.time[day] : 0 | number:2}}</td>
@@ -33,6 +35,7 @@
 				<td>{{task.authHours | number:2}}</td>
 			</tr>
 			<tr>
+				<td>&nbsp;</td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
 				<td ng-repeat="day in [] | range:period.days"><span ng-bind="sumHoursDay(day) | number:2"></span></td>

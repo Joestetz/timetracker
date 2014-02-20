@@ -174,18 +174,14 @@ timeTracker.config(['$routeProvider',
 				alert("Not implemented.");
 			};
 			
-			/*
-			$scope.addAbsense = function() {
-				if($scope.absense != undefined)
-					$scope.time.push({ "taskId": $scope.absense.id, "taskName": $scope.absense.name, "taskDescription": $scope.absense.description, "time": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] });
-				$('#addAbsenseModal').modal('hide');
-			}
-			
-			$scope.addLabor = function() {
-				if($scope.labor != undefined)
-					$scope.time.push({ "taskId": $scope.labor.id, "taskName": $scope.labor.name, "taskDescription": $scope.labor.description, "time": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] });
-				$('#addLaborModal').modal('hide');
-			}*/
+			$scope.deleteTime = function(taskId) {
+				if(confirm('Are you sure you want to delete this row?'))
+				{
+					$scope.tasks = jQuery.grep($scope.tasks, function(e, i) {
+						return (e.task_id != taskId);
+					});
+				}
+			};
 		}
 	]);
 

@@ -11,7 +11,7 @@ timeTracker.directive('addAbsenseModal', ['Api', 'ApiType', function(Api, ApiTyp
 		
 			scope.addAbsense = function() {
 				if(scope.absense != undefined)
-					scope.tasks.push({ "isAbsense": true, "task_id": scope.absense._id, "taskName": scope.absense.name, "taskDescription": scope.absense.description, "uid": scope.absense.uid, "time": [], "authHours": 0 });
+					scope.tasks.push({ 'isAbsense': true, 'task_id': scope.absense._id, 'taskName': scope.absense.name, 'taskDescription': scope.absense.description, 'uid': scope.absense.uid, 'time': [], 'authHours': 0 });
 				element.modal('hide');
 			};
 		}
@@ -24,7 +24,7 @@ timeTracker.directive('addLaborModal', ['Api', 'ApiType', function(Api, ApiType)
 		templateUrl: 'templates/addLaborForm.html',
 		replace: true,
 		link: function (scope, element, attrs) {
-			var taskBank = Api.call(ApiType.users + "/" + user2_id).getById();
+			var taskBank = Api.call(ApiType.users + '/' + user2_id).getById();
 			taskBank.$promise.then(function(data) {
 				var taskArr = jQuery.map(data.taskBank, function(e, i) {
 					return e.task_id;
@@ -38,10 +38,19 @@ timeTracker.directive('addLaborModal', ['Api', 'ApiType', function(Api, ApiType)
 			scope.addLabor = function() {
 				if(scope.labor != undefined)
 				{
-					scope.tasks.push({ "isAbsense": false, "task_id": scope.labor._id, "taskName": scope.labor.name, "taskDescription": scope.labor.description, "uid": scope.labor.uid, "time": [], "authHours": 0 });
+					scope.tasks.push({ 'isAbsense': false, 'task_id': scope.labor._id, 'taskName': scope.labor.name, 'taskDescription': scope.labor.description, 'uid': scope.labor.uid, 'time': [], 'authHours': 0 });
 				}
 				element.modal('hide');
 			};
 		}
 	};
 }]);
+
+timeTracker.directive('tooltip', function () {
+    return {
+        restrict:'A',
+        link: function(scope, element, attrs) {
+            $(element).tooltip({placement: 'right'})
+        }
+    }
+});
