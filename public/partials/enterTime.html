@@ -4,7 +4,7 @@
 			<button type="button" class="btn btn-primary btn-small" data-toggle="modal" data-target="#addAbsenseModal">Add Absense</button>
 			<button type="button" class="btn btn-primary btn-small" data-toggle="modal" data-target="#addLaborModal">Add Labor</button>
 			<button type="button" class="btn btn-primary btn-small" ng-click="saveTime()">Save</button>
-			<button type="button" class="btn btn-primary btn-small">Submit</button>
+			<button type="button" class="btn btn-primary btn-small" ng-click="submitTime()">Submit</button>
 		</div>
 		<div class="span4" style="text-align:right">
 			<select class="select" ng-model="period" ng-options="p.title for p in periods" ng-change="changePeriod()">

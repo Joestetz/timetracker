@@ -170,6 +170,10 @@ timeTracker.config(['$routeProvider',
 				Api.call(ApiType.time).update({id: $scope.timeId }, angular.copy($scope.tasks));
 			};
 			
+			$scope.submitTime = function() {
+				alert("Not implemented.");
+			};
+			
 			/*
 			$scope.addAbsense = function() {
 				if($scope.absense != undefined)

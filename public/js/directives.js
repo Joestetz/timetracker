@@ -11,7 +11,7 @@ timeTracker.directive('addAbsenseModal', ['Api', 'ApiType', function(Api, ApiTyp
 		
 			scope.addAbsense = function() {
 				if(scope.absense != undefined)
-					scope.tasks.push({ "task_id": scope.absense._id, "taskName": scope.absense.name, "taskDescription": scope.absense.description, "uid": scope.absense.uid, "time": [], "authHours": 0 });
+					scope.tasks.push({ "isAbsense": true, "task_id": scope.absense._id, "taskName": scope.absense.name, "taskDescription": scope.absense.description, "uid": scope.absense.uid, "time": [], "authHours": 0 });
 				element.modal('hide');
 			};
 		}
@@ -38,7 +38,7 @@ timeTracker.directive('addLaborModal', ['Api', 'ApiType', function(Api, ApiType)
 			scope.addLabor = function() {
 				if(scope.labor != undefined)
 				{
-					scope.tasks.push({ "task_id": scope.labor._id, "taskName": scope.labor.name, "taskDescription": scope.labor.description, "uid": scope.labor.uid, "time": [], "authHours": 0 });
+					scope.tasks.push({ "isAbsense": false, "task_id": scope.labor._id, "taskName": scope.labor.name, "taskDescription": scope.labor.description, "uid": scope.labor.uid, "time": [], "authHours": 0 });
 				}
 				element.modal('hide');
 			};
