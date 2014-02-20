@@ -3,8 +3,8 @@
 		<div class="span8">
 			<button type="button" class="btn btn-primary btn-small" data-toggle="modal" data-target="#addAbsenseModal">Add Absense</button>
 			<button type="button" class="btn btn-primary btn-small" data-toggle="modal" data-target="#addLaborModal">Add Labor</button>
-			<button type="button" class="btn btn-primary btn-small">Save</button>
-			<button type="button" class="btn btn-primary btn-small">Submit</button>
+			<button type="button" class="btn btn-primary btn-small" ng-click="saveTime()">Save</button>
+			<button type="button" class="btn btn-primary btn-small" ng-click="submitTime()">Submit</button>
 		</div>
 		<div class="span4" style="text-align:right">
 			<select class="select" ng-model="period" ng-options="p.title for p in periods" ng-change="changePeriod()">
@@ -28,7 +28,7 @@
 			<tr ng-repeat="task in tasks" ng-class="{ error: isError(task) }">
 				<td>{{task.taskName}}</td>
 				<td>{{task.uid}}</td>
-				<td ng-repeat="day in [] | range:period.days">{{task.time[day] | number:2}}</td>
+				<td ng-repeat="day in [] | range:period.days">{{task.time[day] ? task.time[day] : 0 | number:2}}</td>
 				<td>{{sumHoursTask(task) | number:2}}</td>
 				<td>{{task.authHours | number:2}}</td>
 			</tr>

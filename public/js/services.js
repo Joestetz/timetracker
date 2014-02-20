@@ -27,16 +27,16 @@ services.factory('Api', function($resource) {
 			});
 		};
 		
-		var queryFn = function() {
-			return collection().query();
+		var queryFn = function(params) {
+			return collection().query(params);
 		};
 		
 		var showFn = function(params) {
 			return entity().show(params);
 		};
 		
-		var updateFn = function(params) {
-			return entity().update(params);
+		var updateFn = function(params, postData) {
+			return entity().update(params, postData);
 		};
 		
 		var getByParamsFn = function(params) {

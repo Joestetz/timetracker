@@ -37,6 +37,7 @@ app.get('/api/tasks', api.getAllTasks);
 app.get('/api/tasks/:id', api.getTaskById);
 
 app.get('/api/time', api.getTimeForUserAndPeriod);
+app.put('/api/time/:id', api.updateTime);
 
 app.get('/api/users', api.getAllUsers);
 app.get('/api/users/:id', api.getUserById);

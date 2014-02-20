@@ -8,6 +8,7 @@ var timeSchema = new Schema({
 	user_id: ObjectId,
 	period_id: ObjectId,
 	tasks: [{
+		isAbsense: Boolean,
 		task_id: ObjectId,
 		taskName: String,
 		taskDescription: String,
