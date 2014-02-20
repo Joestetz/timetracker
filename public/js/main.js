@@ -93,7 +93,7 @@ timeTracker.config(['$routeProvider',
 					if (data.tasks && data.tasks.length > 0)
 					{
 						$scope.tasks = data.tasks;
-						$scope.taskObj = data;
+						$scope.timeId = data._id;
 						if (onlyTasks)
 						{
 							angular.forEach($scope.tasks, function(v,k) {
@@ -130,7 +130,7 @@ timeTracker.config(['$routeProvider',
 				if ($scope.tasks)
 				{
 					$.each($scope.tasks, function(i, e) {
-						sum += e.time[day];
+						sum += (e.time[day] ? e.time[day] : 0);
 					});
 				}
 				return sum;
@@ -165,6 +165,10 @@ timeTracker.config(['$routeProvider',
 				}
 				return sum;
 			}
+			
+			$scope.saveTime = function() {
+				Api.call(ApiType.time).update({id: $scope.timeId }, angular.copy($scope.tasks));
+			};
 			
 			/*
 			$scope.addAbsense = function() {

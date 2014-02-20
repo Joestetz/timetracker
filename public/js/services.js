@@ -15,8 +15,7 @@ services.factory('Api', function($resource) {
 			return $resource(baseUrl, {}, {
 				query: { method: "GET", isArray: true },
 				create: { method: "POST" },
-				getByParams: { method: "GET" }//,
-				//update: { method: "PUT", params: {id: "@id"} }
+				getByParams: { method: "GET" }
 			});	
 		};
 		

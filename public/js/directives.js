@@ -39,10 +39,6 @@ timeTracker.directive('addLaborModal', ['Api', 'ApiType', function(Api, ApiType)
 				if(scope.labor != undefined)
 				{
 					scope.tasks.push({ "task_id": scope.labor._id, "taskName": scope.labor.name, "taskDescription": scope.labor.description, "uid": scope.labor.uid, "time": [], "authHours": 0 });
-					//scope.taskObj.periods[0].tasks.push({ "task_id": scope.labor._id, "taskName": scope.labor.name, "taskDescription": scope.labor.description, "uid": scope.labor.uid, "time": [] });;
-					//scope.taskObj.$update({id:scope.taskObj._id});
-					//scope.taskObj.$update({ id: scope.taskObj._id });
-					Api.call(ApiType.time).update({id: scope.taskObj._id }, scope.taskObj);
 				}
 				element.modal('hide');
 			};

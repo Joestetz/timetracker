@@ -97,7 +97,7 @@ exports.getTimeForUserAndPeriod = function(req, res) {
 
 exports.updateTime = function(req, res) {
 	console.log("Updating " + req.params.id + ": " + JSON.stringify(req.body));
-	Time.findOneAndUpdate({ _id: req.params.id }, req.body, function(err, time) {
+	Time.findOneAndUpdate({ _id: req.params.id }, { $set: { tasks: req.body } }, function(err, time) {
 		if(!err)
 		{
 			res.send(time);
