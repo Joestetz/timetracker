@@ -184,6 +184,12 @@ timeTracker.config(['$routeProvider',
 			};
 		}
 	]);
+	
+	timeTracker.controller('manageTasksController', ['$scope', 'Api', 'ApiType',
+		function($scope, Api, ApiType){
+			
+		}
+	]);
 
 	timeTracker.controller('testService', ['$scope', 'Api', 'ApiType',
 		function($scope, Api, ApiType) {			
