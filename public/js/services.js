@@ -16,7 +16,7 @@ services.factory('Api', function($resource) {
 				query: { method: "GET", isArray: true },
 				create: { method: "POST" },
 				getByParams: { method: "GET" }
-			});	
+			});
 		};
 		
 		var entity = function() {
@@ -55,3 +55,22 @@ services.factory('Api', function($resource) {
 		call: callFn
 	};
 });
+
+// More complex and reusable services go here
+services.service('HelperSvc', ['Api', 'ApiType', '$q',
+	function(Api, ApiType, $q){
+		// Gets the task bank with all task info for a specific user
+		this.getUserTaskBank = function(user_id) {
+			var tasks = $q.defer();
+			Api.call(ApiType.users).getById({id: user_id}).$promise.then(function(data) {
+				var taskArr = jQuery.map(data.taskBank, function(e, i) {
+					return e.task_id;
+				});
+				
+				tasks.resolve(Api.call(ApiType.tasks).getAll({ids: taskArr }).$promise);
+			});
+			
+			return tasks.promise;
+		};
+	}
+]);
