@@ -87,7 +87,7 @@ timeTracker.config(['$routeProvider',
 	timeTracker.controller('enterTimeController', ['$scope', 'Api', 'ApiType',
 		function($scope, Api, ApiType){
 			var populateTime = function(pid, onlyTasks) {
-				var time = Api.call(ApiType.time).getByParams({user: user2_id, period: pid});
+				var time = Api.call(ApiType.time).getOneByParams({user: user2_id, period: pid});
 				
 				return time.$promise.then(function(data) {
 					if (data.tasks && data.tasks.length > 0)
@@ -185,13 +185,17 @@ timeTracker.config(['$routeProvider',
 		}
 	]);
 	
-	timeTracker.controller('myTasksController', ['$scope', 'HelperSvc',
-		function($scope, HelperSvc){
+	timeTracker.controller('myTasksController', ['$scope', 'HelperSvc', 'Api', 'ApiType',
+		function($scope, HelperSvc, Api, ApiType){
 			HelperSvc.getUserTaskBank(user2_id).then(function(data) {
 				$scope.tasks = data;
 			});
 			
 			$scope.deleteTask = function(taskId) {
+				if(confirm('Are you sure you want to delete this task?'))
+				{
+					Api.call(ApiType.users).getById({id: user2_id});
+				}
 			};
 		}
 	]);

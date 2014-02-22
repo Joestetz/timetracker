@@ -83,16 +83,28 @@ exports.getTaskById = function(req, res) {
 }
 
 // Time
-exports.getTimeForUserAndPeriod = function(req, res) {
-	console.log("Getting time for user " + req.query.user + " and period " + req.query.period);
-	Time.findOne({ user_id: req.query.user, period_id: req.query.period }, function(err, time) {
-		if(!err)
-		{
-			res.send(time);
-		}
-		else
-			console.log(err);
-	});
+exports.getAllTime = function(req, res) {
+	if(req.query.user && req.query.period) {
+		// should return a single object
+		console.log("!!!!Getting time for user " + req.query.user + " and period " + req.query.period);
+		Time.findOne({ user_id: req.query.user, period_id: req.query.period }, function(err, time) {
+			if(!err)
+			{
+				res.send(time);
+			}
+			else
+				console.log(err);
+		});
+	} else {
+		// should return array of objects
+		console.log("!!!!Getting all time");
+		Time.find(function(err, time) {
+			if(!err)
+				res.send(time);
+			else
+				console.log(err);
+		});
+	}
 }
 
 exports.updateTime = function(req, res) {
@@ -128,7 +140,7 @@ exports.getUserById = function(req, res) {
 	});
 }
 
-exports.addUser = function(req, res) {
-	console.log("Adding user: " + JSON.stringify(req.body));
-	new User({name: req.body.name, login: req.body.login, password: req.body.password}).save();
-}
+// exports.addUser = function(req, res) {
+	// console.log("Adding user: " + JSON.stringify(req.body));
+	// new User({name: req.body.name, login: req.body.login, password: req.body.password}).save();
+// }

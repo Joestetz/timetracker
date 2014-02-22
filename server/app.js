@@ -36,12 +36,12 @@ app.get('/api/periods/:id', api.getPeriodById);
 app.get('/api/tasks', api.getAllTasks);
 app.get('/api/tasks/:id', api.getTaskById);
 
-app.get('/api/time', api.getTimeForUserAndPeriod);
+app.get('/api/time', api.getAllTime);
 app.put('/api/time/:id', api.updateTime);
 
 app.get('/api/users', api.getAllUsers);
 app.get('/api/users/:id', api.getUserById);
-app.post('/api/users', api.addUser);
+// app.post('/api/users', api.addUser);
 
 
 // Start Server

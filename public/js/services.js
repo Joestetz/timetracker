@@ -15,7 +15,7 @@ services.factory('Api', function($resource) {
 			return $resource(baseUrl, {}, {
 				query: { method: "GET", isArray: true },
 				create: { method: "POST" },
-				getByParams: { method: "GET" }
+				getOneByParams: { method: "GET" }
 			});
 		};
 		
@@ -39,15 +39,15 @@ services.factory('Api', function($resource) {
 			return entity().update(params, postData);
 		};
 		
-		var getByParamsFn = function(params) {
-			return collection().getByParams(params);
+		var getOneByParamsFn = function(params) {
+			return collection().getOneByParams(params);
 		};
 		
 		return {
 			getAll: queryFn,
 			getById: showFn,
 			update: updateFn,
-			getByParams: getByParamsFn
+			getOneByParams: getOneByParamsFn // get a single record based on filter criteria
 		};
 	};
 	
