@@ -8,7 +8,7 @@ var User = require('../models/user.js');
 
 // Absense
 exports.getAllAbsenses = function(req, res) {
-	console.log("Getting all absenses");
+	console.log('Getting all absenses');
 	Absense.find(function(err, absenses) {
 		if(!err)
 			res.send(absenses);
@@ -18,7 +18,7 @@ exports.getAllAbsenses = function(req, res) {
 }
 
 exports.getAbsenseById = function(req, res) {
-	console.log("Getting absense " + req.params.id);
+	console.log('Getting absense ' + req.params.id);
 	Absense.findById(req.params.id, function(err, absense) {
 		if(!err)
 			res.send(absense);
@@ -29,7 +29,7 @@ exports.getAbsenseById = function(req, res) {
 
 // Period
 exports.getAllPeriods = function(req, res) {
-	console.log("Getting all periods");
+	console.log('Getting all periods');
 	Period.find(function(err, periods) {
 		if(!err)
 			res.send(periods);
@@ -39,7 +39,7 @@ exports.getAllPeriods = function(req, res) {
 }
 
 exports.getPeriodById = function(req, res) {
-	console.log("Getting period " + req.params.id);
+	console.log('Getting period ' + req.params.id);
 	Period.findById(req.params.id, function(err, period) {
 		if(!err)
 			res.send(period);
@@ -51,18 +51,29 @@ exports.getPeriodById = function(req, res) {
 // Task
 exports.getAllTasks = function(req, res) {
 	var ids = req.query.ids;
+	var uid = req.query.uid;
 	
-	if(ids)
-	{
-		console.log("Getting tasks with matching IDs");
+	if(ids) {
+		// should return array of objects
+		console.log('Getting tasks with matching IDs');
 		Task.find({ '_id': { $in: ids }}, function(err, tasks) {
 			if(!err)
 				res.send(tasks);
 			else
 				console.log(err);
 		});
+	} else if (uid) {
+		// should return a single object
+		console.log('Getting task with oid ' + uid);
+		Task.findOne({ uid: uid }, function(err, task) {
+			if(!err)
+				res.send(task);
+			else
+				console.log(err);
+		});
 	} else {
-		console.log("Getting all tasks");
+		// should return array of objects
+		console.log('Getting all tasks');
 		Task.find(function(err, tasks) {
 			if(!err)
 				res.send(tasks);
@@ -73,7 +84,7 @@ exports.getAllTasks = function(req, res) {
 }
 
 exports.getTaskById = function(req, res) {
-	console.log("Getting task " + req.params.id);
+	console.log('Getting task ' + req.params.id);
 	Task.findById(req.params.id, function(err, task) {
 		if(!err)
 			res.send(task);
@@ -86,7 +97,7 @@ exports.getTaskById = function(req, res) {
 exports.getAllTime = function(req, res) {
 	if(req.query.user && req.query.period) {
 		// should return a single object
-		console.log("!!!!Getting time for user " + req.query.user + " and period " + req.query.period);
+		console.log('Getting time for user ' + req.query.user + ' and period ' + req.query.period);
 		Time.findOne({ user_id: req.query.user, period_id: req.query.period }, function(err, time) {
 			if(!err)
 			{
@@ -97,7 +108,7 @@ exports.getAllTime = function(req, res) {
 		});
 	} else {
 		// should return array of objects
-		console.log("!!!!Getting all time");
+		console.log('Getting all time');
 		Time.find(function(err, time) {
 			if(!err)
 				res.send(time);
@@ -108,7 +119,7 @@ exports.getAllTime = function(req, res) {
 }
 
 exports.updateTime = function(req, res) {
-	console.log("Updating " + req.params.id + ": " + JSON.stringify(req.body));
+	console.log('Updating ' + req.params.id + ': ' + JSON.stringify(req.body));
 	Time.findOneAndUpdate({ _id: req.params.id }, { $set: { tasks: req.body } }, function(err, time) {
 		if(!err)
 		{
@@ -121,7 +132,7 @@ exports.updateTime = function(req, res) {
 
 // User
 exports.getAllUsers = function(req, res) {
-	console.log("Getting all users");
+	console.log('Getting all users');
 	User.find(function(err, users) {
 		if(!err)
 			res.send(users);
@@ -131,7 +142,7 @@ exports.getAllUsers = function(req, res) {
 }
 
 exports.getUserById = function(req, res) {
-	console.log("Getting user " + req.params.id);
+	console.log('Getting user ' + req.params.id);
 	User.findById(req.params.id, function(err, user) {
 		if(!err)
 			res.send(user);

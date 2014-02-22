@@ -1,0 +1,24 @@
+<div class="modal hide" role="dialog">
+	<form name="addTaskForm" novalidate class="form-horizontal" ng-submit="addTask()">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h3>Add Task</h3>
+		</div>
+		<div class="modal-body">
+			<div class="control-group">
+				<label class="control-label" for="inputTaskId">Task Number</label>
+				<div class="controls">
+					<input type="text" name="taskId" id="inputTaskId" placeholder="Enter Charge Number" ng-model="addTaskNumber" validate-task required>
+				</div>
+			</div>
+			<div class="alert alert-error" ng-show="addTaskForm.taskId.$invalid && submitted">
+				<div ng-show="addTaskForm.taskId.$error.required">Task number is required.</div>
+				<div ng-show="addTaskForm.taskId.$error.isValid">Task number is invalid.</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn" data-dismiss="modal">Close</button>
+			<button type="submit" class="btn btn-primary">Add</button>
+		</div>
+	</form>
+</div>
