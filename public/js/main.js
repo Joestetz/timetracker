@@ -22,7 +22,7 @@ timeTracker.config(['$routeProvider',
 	}
 ]);
 
-{ // Filters
+{ //#region Filters
 	timeTracker.filter('range', function() {
 		return function(input, total) {
 			total = parseInt(total);
@@ -73,9 +73,9 @@ timeTracker.config(['$routeProvider',
 			return input;
 		};
 	});
-}
+} //#endregion
 
-{ // Controllers
+{ //#region Controllers
 	timeTracker.controller('headerController', ['$scope', '$location',
 		function($scope, $location){
 			$scope.isActive = function (viewLocation) { 
@@ -185,7 +185,7 @@ timeTracker.config(['$routeProvider',
 		}
 	]);
 	
-	timeTracker.controller('manageTasksController', ['$scope', 'HelperSvc',
+	timeTracker.controller('myTasksController', ['$scope', 'HelperSvc',
 		function($scope, HelperSvc){
 			HelperSvc.getUserTaskBank(user2_id).then(function(data) {
 				$scope.tasks = data;
@@ -209,4 +209,4 @@ timeTracker.config(['$routeProvider',
 			};
 		}
 	]);
-}
+} //#endregion

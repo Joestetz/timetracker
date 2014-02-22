@@ -1,4 +1,4 @@
-<div ng-controller="manageTasksController">
+<div ng-controller="myTasksController">
 	<div class="row-fluid" style="margin-bottom:10px;">
 		<div class="span12">
 			<button type="button" class="btn btn-primary btn-small" data-toggle="modal" data-target="#addTaskModal">Add Task</button>
@@ -19,7 +19,7 @@
 		<tbody>
 			<tr ng-repeat="task in tasks">
 				<td style="text-align: center;">
-					<a class="btn btn-mini" title="Edit" tooltip><i class="icon-edit"></i></a>
+					<a class="btn btn-mini" title="Edit" tooltip data-toggle="modal" data-target="#editTaskModal"><i class="icon-edit"></i></a>
 					<a class="btn btn-mini" title="Delete" tooltip ng-click="deleteTask(task._id)"><i class="icon-trash"></i></a>
 				</td>
 				<td>{{task.name}}</td>
@@ -29,4 +29,5 @@
 		</tbody>
 	</table>
 	<div id="addTaskModal" add-task-modal></div>
+	<div id="editTaskModal" edit-task-modal></div>
 </div>
