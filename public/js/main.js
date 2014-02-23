@@ -194,7 +194,11 @@ timeTracker.config(['$routeProvider',
 			$scope.deleteTask = function(taskId) {
 				if(confirm('Are you sure you want to delete this task?'))
 				{
-					Api.call(ApiType.users).getById({id: user2_id});
+					Api.call(ApiType.users).deleteRef({ id: user2_id, ref: taskId }).$promise.then(function(data) {
+						angular.forEach($scope.tasks, function(v, k) {
+							if(v._id == taskId) $scope.tasks.splice(k, 1);
+						});
+					});
 				}
 			};
 		}

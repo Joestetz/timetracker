@@ -42,6 +42,7 @@ app.put('/api/time/:id', api.updateTime);
 app.get('/api/users', api.getAllUsers);
 app.get('/api/users/:id', api.getUserById);
 app.put('/api/users/:id/:task', api.addUserTask);
+app.delete('/api/users/:id/:task', api.removeUserTask);
 // app.post('/api/users', api.addUser);
 
 

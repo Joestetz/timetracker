@@ -163,6 +163,18 @@ exports.addUserTask = function(req, res) {
 	});
 }
 
+exports.removeUserTask = function(req, res) {
+	console.log('Remove from user ' + req.params.id + ' taskBank: ' + req.params.task);
+	User.findOneAndUpdate({ _id: req.params.id }, { $pull: { taskBank: { task_id: req.params.task } } }, function(err, user) {
+		if(!err)
+		{
+			res.send(user);
+		}
+		else
+			console.log(err);
+	});
+}
+
 // exports.addUser = function(req, res) {
 	// console.log("Adding user: " + JSON.stringify(req.body));
 	// new User({name: req.body.name, login: req.body.login, password: req.body.password}).save();

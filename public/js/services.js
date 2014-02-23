@@ -54,12 +54,17 @@ services.factory('Api', function($resource) {
 			return entityRef().update(params, postData);
 		};
 		
+		var deleteRefFn = function(params, postData) {
+			return entityRef().delete(params, postData);
+		};
+		
 		return {
 			getAll: queryFn,
 			getById: showFn,
 			update: updateFn,
 			getOneByParams: getOneByParamsFn, // get a single record based on filter criteria
-			updateRef: updateRefFn // update or delete a reference to another document
+			updateRef: updateRefFn, // update a reference to another document
+			deleteRef: deleteRefFn // delete a reference to another document
 		};
 	};
 	

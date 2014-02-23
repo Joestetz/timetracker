@@ -55,18 +55,18 @@
 						if(!scope.addTaskId) return;
 						Api.call(ApiType.tasks).getOneByParams({ uid: scope.addTaskId }).$promise.then(function(data) {
 							if(data.uid && data.uid == scope.addTaskId) {
-								addTaskSuccess(data._id);
+								addTaskSuccess(data);
 							} else {
 								addTaskFail();
 							}
 						});
 					};
 					
-					var addTaskSuccess = function(id) {
-						scope.addTaskForm.taskId.$setValidity('isValid', true);
-						element.modal('hide');
-						Api.call(ApiType.users).updateRef({ id: user2_id, ref: id }).$promise.then(function(data) {
-							var t = data;
+					var addTaskSuccess = function(task) {
+						Api.call(ApiType.users).updateRef({ id: user2_id, ref: task._id }).$promise.then(function(data) {
+							scope.tasks.push(task);
+							scope.addTaskForm.taskId.$setValidity('isValid', true);
+							element.modal('hide');
 						});
 					};
 					
