@@ -64,7 +64,7 @@
 					
 					var addTaskSuccess = function(task) {
 						Api.call(ApiType.users).updateRef({ id: user2_id, ref: task._id }).$promise.then(function(data) {
-							scope.tasks.push(task);
+							if(data.taskBank.length == scope.tasks.length + 1) scope.tasks.push(task);
 							scope.addTaskForm.taskId.$setValidity('isValid', true);
 							element.modal('hide');
 						});
