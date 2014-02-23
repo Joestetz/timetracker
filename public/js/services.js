@@ -1,11 +1,11 @@
 var services = angular.module('apiServices', ['ngResource']);
 
 services.constant('ApiType', {
-	absenses: "/api/absenses",
-	users: "/api/users",
-	periods: "/api/periods",
-	tasks: "/api/tasks",
-	time: "/api/time"
+	absenses: '/api/absenses',
+	users: '/api/users',
+	periods: '/api/periods',
+	tasks: '/api/tasks',
+	time: '/api/time'
 });
 
 // Api.call('/api/absenses').getAll()
@@ -13,17 +13,24 @@ services.factory('Api', function($resource) {
 	var callFn = function(baseUrl) {
 		var collection = function() {
 			return $resource(baseUrl, {}, {
-				query: { method: "GET", isArray: true },
-				create: { method: "POST" },
-				getOneByParams: { method: "GET" }
+				query: { method: 'GET', isArray: true },
+				create: { method: 'POST' },
+				getOneByParams: { method: 'GET' }
 			});
 		};
 		
 		var entity = function() {
 			return $resource(baseUrl + '/:id', {}, {
-				show: { method: "GET" },
-				update: { method: "PUT", params: {id: "@id"} },
-				delete: { method: "DELETE", params: {id: "@id"} }
+				show: { method: 'GET' },
+				update: { method: 'PUT', params: { id: '@id' } },
+				delete: { method: 'DELETE', params: { id: '@id' } }
+			});
+		};
+		
+		var entityRef = function() {
+			return $resource(baseUrl + '/:id/:ref', {}, {
+				update: { method: 'PUT', params: { id: '@id', ref: '@ref' } },
+				delete: { method: 'DELETE', params: {id: '@id', ref: '@ref' } }
 			});
 		};
 		
@@ -43,11 +50,16 @@ services.factory('Api', function($resource) {
 			return collection().getOneByParams(params);
 		};
 		
+		var updateRefFn = function(params, postData) {
+			return entityRef().update(params, postData);
+		};
+		
 		return {
 			getAll: queryFn,
 			getById: showFn,
 			update: updateFn,
-			getOneByParams: getOneByParamsFn // get a single record based on filter criteria
+			getOneByParams: getOneByParamsFn, // get a single record based on filter criteria
+			updateRef: updateRefFn // update or delete a reference to another document
 		};
 	};
 	

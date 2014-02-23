@@ -55,22 +55,22 @@
 						if(!scope.addTaskId) return;
 						Api.call(ApiType.tasks).getOneByParams({ uid: scope.addTaskId }).$promise.then(function(data) {
 							if(data.uid && data.uid == scope.addTaskId) {
-								addTaskSuccess();
+								addTaskSuccess(data._id);
 							} else {
 								addTaskFail();
 							}
 						});
 					};
 					
-					var addTaskSuccess = function() {
-						// update DB with new task in user's taskBank
+					var addTaskSuccess = function(id) {
 						scope.addTaskForm.taskId.$setValidity('isValid', true);
-						alert("success!");
 						element.modal('hide');
+						Api.call(ApiType.users).updateRef({ id: user2_id, ref: id }).$promise.then(function(data) {
+							var t = data;
+						});
 					};
 					
 					var addTaskFail = function() {
-						// notify user of error in modal
 						scope.addTaskForm.taskId.$setValidity('isValid', false);
 					};
 				}

@@ -119,7 +119,7 @@ exports.getAllTime = function(req, res) {
 }
 
 exports.updateTime = function(req, res) {
-	console.log('Updating ' + req.params.id + ': ' + JSON.stringify(req.body));
+	console.log('Updating time for ' + req.params.id + ': ' + JSON.stringify(req.body));
 	Time.findOneAndUpdate({ _id: req.params.id }, { $set: { tasks: req.body } }, function(err, time) {
 		if(!err)
 		{
@@ -146,6 +146,18 @@ exports.getUserById = function(req, res) {
 	User.findById(req.params.id, function(err, user) {
 		if(!err)
 			res.send(user);
+		else
+			console.log(err);
+	});
+}
+
+exports.addUserTask = function(req, res) {
+	console.log('Add to user ' + req.params.id + ' taskBank: ' + req.params.task);
+	User.findOneAndUpdate({ _id: req.params.id }, { $addToSet: { taskBank: { task_id: req.params.task } } }, function(err, user) {
+		if(!err)
+		{
+			res.send(user);
+		}
 		else
 			console.log(err);
 	});
