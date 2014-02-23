@@ -8,7 +8,7 @@ var userSchema = new Schema({
 	name: String,
 	login: String,
 	password: String,
-	taskBank: [{ task_id: ObjectId }]
+	taskBank: [new Schema({ task_id: ObjectId }, { _id: false })]
 });
 
 module.exports = mongoose.model('User', userSchema);

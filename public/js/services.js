@@ -1,11 +1,11 @@
 var services = angular.module('apiServices', ['ngResource']);
 
 services.constant('ApiType', {
-	absenses: "/api/absenses",
-	users: "/api/users",
-	periods: "/api/periods",
-	tasks: "/api/tasks",
-	time: "/api/time"
+	absenses: '/api/absenses',
+	users: '/api/users',
+	periods: '/api/periods',
+	tasks: '/api/tasks',
+	time: '/api/time'
 });
 
 // Api.call('/api/absenses').getAll()
@@ -13,17 +13,24 @@ services.factory('Api', function($resource) {
 	var callFn = function(baseUrl) {
 		var collection = function() {
 			return $resource(baseUrl, {}, {
-				query: { method: "GET", isArray: true },
-				create: { method: "POST" },
-				getByParams: { method: "GET" }
-			});	
+				query: { method: 'GET', isArray: true },
+				create: { method: 'POST' },
+				getOneByParams: { method: 'GET' }
+			});
 		};
 		
 		var entity = function() {
 			return $resource(baseUrl + '/:id', {}, {
-				show: { method: "GET" },
-				update: { method: "PUT", params: {id: "@id"} },
-				delete: { method: "DELETE", params: {id: "@id"} }
+				show: { method: 'GET' },
+				update: { method: 'PUT', params: { id: '@id' } },
+				delete: { method: 'DELETE', params: { id: '@id' } }
+			});
+		};
+		
+		var entityRef = function() {
+			return $resource(baseUrl + '/:id/:ref', {}, {
+				update: { method: 'PUT', params: { id: '@id', ref: '@ref' } },
+				delete: { method: 'DELETE', params: {id: '@id', ref: '@ref' } }
 			});
 		};
 		
@@ -39,15 +46,25 @@ services.factory('Api', function($resource) {
 			return entity().update(params, postData);
 		};
 		
-		var getByParamsFn = function(params) {
-			return collection().getByParams(params);
+		var getOneByParamsFn = function(params) {
+			return collection().getOneByParams(params);
+		};
+		
+		var updateRefFn = function(params, postData) {
+			return entityRef().update(params, postData);
+		};
+		
+		var deleteRefFn = function(params, postData) {
+			return entityRef().delete(params, postData);
 		};
 		
 		return {
 			getAll: queryFn,
 			getById: showFn,
 			update: updateFn,
-			getByParams: getByParamsFn
+			getOneByParams: getOneByParamsFn, // get a single record based on filter criteria
+			updateRef: updateRefFn, // update a reference to another document
+			deleteRef: deleteRefFn // delete a reference to another document
 		};
 	};
 	
@@ -55,3 +72,22 @@ services.factory('Api', function($resource) {
 		call: callFn
 	};
 });
+
+// More complex and reusable services go here
+services.service('HelperSvc', ['Api', 'ApiType', '$q',
+	function(Api, ApiType, $q){
+		// Gets the task bank with all task info for a specific user
+		this.getUserTaskBank = function(user_id) {
+			var tasks = $q.defer();
+			Api.call(ApiType.users).getById({id: user_id}).$promise.then(function(data) {
+				var taskArr = jQuery.map(data.taskBank, function(e, i) {
+					return e.task_id;
+				});
+				
+				tasks.resolve(Api.call(ApiType.tasks).getAll({ids: taskArr }).$promise);
+			});
+			
+			return tasks.promise;
+		};
+	}
+]);

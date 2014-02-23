@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
 var timeSchema = new Schema({
 	user_id: ObjectId,
 	period_id: ObjectId,
-	tasks: [{
+	tasks: [new Schema({
 		isAbsense: Boolean,
 		task_id: ObjectId,
 		taskName: String,
@@ -15,7 +15,7 @@ var timeSchema = new Schema({
 		uid: String,
 		time: [Number],
 		authHours: Number
-	}]
+	}, { _id: false })]
 });
 
 module.exports = mongoose.model('Time', timeSchema, "time");

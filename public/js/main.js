@@ -22,7 +22,7 @@ timeTracker.config(['$routeProvider',
 	}
 ]);
 
-{ // Filters
+{ //#region Filters
 	timeTracker.filter('range', function() {
 		return function(input, total) {
 			total = parseInt(total);
@@ -73,9 +73,9 @@ timeTracker.config(['$routeProvider',
 			return input;
 		};
 	});
-}
+} //#endregion
 
-{ // Controllers
+{ //#region Controllers
 	timeTracker.controller('headerController', ['$scope', '$location',
 		function($scope, $location){
 			$scope.isActive = function (viewLocation) { 
@@ -87,22 +87,22 @@ timeTracker.config(['$routeProvider',
 	timeTracker.controller('enterTimeController', ['$scope', 'Api', 'ApiType',
 		function($scope, Api, ApiType){
 			var populateTime = function(pid, onlyTasks) {
-				var time = Api.call(ApiType.time).getByParams({user: user2_id, period: pid});
+				var time = Api.call(ApiType.time).getOneByParams({user: user2_id, period: pid});
 				
 				return time.$promise.then(function(data) {
 					if (data.tasks && data.tasks.length > 0)
 					{
-						$scope.tasks = data.tasks;
+						$scope.periodTasks = data.tasks;
 						$scope.timeId = data._id;
 						if (onlyTasks)
 						{
-							angular.forEach($scope.tasks, function(v,k) {
+							angular.forEach($scope.periodTasks, function(v,k) {
 								v.time.length = 0;
 								v.authHours = null;
 							});
 						}
 					} else {
-						$scope.tasks = null;
+						$scope.periodTasks = null;
 					}
 				});
 			};
@@ -112,7 +112,7 @@ timeTracker.config(['$routeProvider',
 				$scope.periods = data;
 				$scope.period = data[0];
 				populateTime($scope.period._id).then(function (){
-					if($scope.tasks == null)
+					if($scope.periodTasks == null)
 						populateTime($scope.periods[1]._id, true);
 				});
 			});
@@ -127,9 +127,9 @@ timeTracker.config(['$routeProvider',
 			
 			$scope.sumHoursDay = function(day) {
 				var sum = 0.00;
-				if ($scope.tasks)
+				if ($scope.periodTasks)
 				{
-					$.each($scope.tasks, function(i, e) {
+					$.each($scope.periodTasks, function(i, e) {
 						sum += (e.time[day] ? e.time[day] : 0);
 					});
 				}
@@ -146,9 +146,9 @@ timeTracker.config(['$routeProvider',
 			
 			$scope.sumTotalHours = function() {
 				var sum = 0.00;
-				if ($scope.tasks)
+				if ($scope.periodTasks)
 				{
-					$.each($scope.tasks, function(i, e) {
+					$.each($scope.periodTasks, function(i, e) {
 						sum += $scope.sumHoursTask(e);
 					});
 				}
@@ -157,9 +157,9 @@ timeTracker.config(['$routeProvider',
 			
 			$scope.sumAuthHours = function() {
 				var sum = 0.00;
-				if ($scope.tasks)
+				if ($scope.periodTasks)
 				{
-					$.each($scope.tasks, function(i, e) {
+					$.each($scope.periodTasks, function(i, e) {
 						sum += e.authHours;
 					});
 				}
@@ -167,7 +167,7 @@ timeTracker.config(['$routeProvider',
 			}
 			
 			$scope.saveTime = function() {
-				Api.call(ApiType.time).update({id: $scope.timeId }, angular.copy($scope.tasks));
+				Api.call(ApiType.time).update({id: $scope.timeId }, angular.copy($scope.periodTasks));
 			};
 			
 			$scope.submitTime = function() {
@@ -177,8 +177,27 @@ timeTracker.config(['$routeProvider',
 			$scope.deleteTime = function(taskId) {
 				if(confirm('Are you sure you want to delete this row?'))
 				{
-					$scope.tasks = jQuery.grep($scope.tasks, function(e, i) {
+					$scope.periodTasks = jQuery.grep($scope.periodTasks, function(e, i) {
 						return (e.task_id != taskId);
+					});
+				}
+			};
+		}
+	]);
+	
+	timeTracker.controller('myTasksController', ['$scope', 'HelperSvc', 'Api', 'ApiType',
+		function($scope, HelperSvc, Api, ApiType){
+			HelperSvc.getUserTaskBank(user2_id).then(function(data) {
+				$scope.tasks = data;
+			});
+			
+			$scope.deleteTask = function(taskId) {
+				if(confirm('Are you sure you want to delete this task?'))
+				{
+					Api.call(ApiType.users).deleteRef({ id: user2_id, ref: taskId }).$promise.then(function(data) {
+						angular.forEach($scope.tasks, function(v, k) {
+							if(v._id == taskId) $scope.tasks.splice(k, 1);
+						});
 					});
 				}
 			};
@@ -190,11 +209,12 @@ timeTracker.config(['$routeProvider',
 			$scope.absenses = Api.call(ApiType.absenses).getAll();
 			
 			$scope.changeSelected = function() {
-				var a = Api.call(ApiType.absenses).getById({id: $scope.selectedId});
-				a.$promise.then(function(data) {
-					$scope.selected = data;
-				});
+				// var a = Api.call(ApiType.absenses).getById({id: $scope.selectedId});
+				// a.$promise.then(function(data) {
+					// $scope.selected = data;
+				// });
+				$scope.selected = Api.call(ApiType.absenses).getById({id: $scope.selectedId});
 			};
 		}
 	]);
-}
+} //#endregion
