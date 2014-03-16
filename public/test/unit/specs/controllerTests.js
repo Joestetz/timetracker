@@ -28,6 +28,55 @@ describe('headerController test', function() {
 describe('enterTimeController', function() {
 	var rootScope, scope, ctrl, api, $q, mockApi;
 	
+	var mockApiResponsePeriod = [
+		{
+			"_id": "period1",
+			"title": "June 2013 P1",
+			"startDate": "2013-06-01T04:00:00.000Z",
+			"endDate": "2013-06-15T04:00:00.000Z",
+			"days": 15
+		},
+		{
+			"_id": "period2",
+			"title": "June 2013 P2",
+			"startDate": "2013-06-16T04:00:00.000Z",
+			"endDate": "2013-06-30T04:00:00.000Z",
+			"days": 15
+		}
+	];
+		
+	var mockApiResponseTime = {
+		"_id": "time1",
+		"user_id": "user1",
+		"period_id": "period2",
+		"tasks": [
+			{
+				"isAbsense": false,
+				"task_id": "task0",
+				"taskName": "Task Name 00",
+				"taskDescription": "Description 00",
+				"uid": "B01000000000000000000",
+				"authHours": 40,
+				"time": [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]
+			},{
+				"isAbsense": false,
+				"task_id": "task1",
+				"taskName": "Task Name 01",
+				"taskDescription": "Description 01",
+				"uid": "B01000000000000000001",
+				"authHours": 25,
+				"time": [3,3,2.5,2,3,2,2,3,2,0,2,2,0,2,1.25]
+			}
+		]
+	}
+		
+	var mockApiResponseTimeEmpty = {
+		"_id": "time1",
+		"user_id": "user1",
+		"period_id": "period2",
+		"tasks": []
+	}
+	
 	beforeEach(module('timeTracker'));
 	beforeEach(inject(function($rootScope, $controller, _$q_) {
 		rootScope = $rootScope;
@@ -48,48 +97,16 @@ describe('enterTimeController', function() {
 				};
 			}
 		}
+		
+		spyOn(mockApi, 'call').andCallThrough();
+		ctrl = $controller('enterTimeController', {$scope: scope, Api: mockApi});
 	}));
 	
 	describe('initial data call -- with time', function() {
-		var mockApiResponsePeriod = [
-			{
-				"_id": "period1",
-				"title": "June 2013 P1",
-				"startDate": "2013-06-01T04:00:00.000Z",
-				"endDate": "2013-06-15T04:00:00.000Z",
-				"days": 15
-			},
-			{
-				"_id": "period2",
-				"title": "June 2013 P2",
-				"startDate": "2013-06-16T04:00:00.000Z",
-				"endDate": "2013-06-30T04:00:00.000Z",
-				"days": 15
-			}];
-			
-		var mockApiResponseTime = {
-			"_id": "time1",
-			"user_id": "user1",
-			"period_id": "period2",
-			"tasks": [
-				{
-					"isAbsense": false,
-					"task_id": "52f78dcf4293916d8c8c281d",
-					"taskName": "Task Name 00",
-					"taskDescription": "Description 00",
-					"uid": "B01000000000000000000",
-					"authHours": 40,
-					"time": [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]
-				}]
-			}
-			
-		beforeEach(inject(function($controller) {
-			spyOn(mockApi, 'call').andCallThrough();
-			ctrl = $controller('enterTimeController', {$scope: scope, Api: mockApi});
-		
-			getAllDeferred.resolve(mockApiResponsePeriod);
+		beforeEach(inject(function() {
+			getAllDeferred.resolve(angular.copy(mockApiResponsePeriod));
 			rootScope.$apply();
-			getOneByParamsDeferred.resolve(mockApiResponseTime);
+			getOneByParamsDeferred.resolve(angular.copy(mockApiResponseTime));
 			rootScope.$apply();
 		}));
 		
@@ -115,54 +132,12 @@ describe('enterTimeController', function() {
 	});
 	
 	describe('initial data call -- without time', function() {
-		var mockApiResponsePeriod = [
-			{
-				"_id": "period1",
-				"title": "June 2013 P1",
-				"startDate": "2013-06-01T04:00:00.000Z",
-				"endDate": "2013-06-15T04:00:00.000Z",
-				"days": 15
-			},
-			{
-				"_id": "period2",
-				"title": "June 2013 P2",
-				"startDate": "2013-06-16T04:00:00.000Z",
-				"endDate": "2013-06-30T04:00:00.000Z",
-				"days": 15
-			}];
-		
-		var mockApiResponseTimeFirst = {
-			"_id": "time1",
-			"user_id": "user1",
-			"period_id": "period2",
-			"tasks": []
-			}
-			
-		var mockApiResponseTimeSecond = {
-			"_id": "time1",
-			"user_id": "user1",
-			"period_id": "period1",
-			"tasks": [
-				{
-					"isAbsense": false,
-					"task_id": "52f78dcf4293916d8c8c281d",
-					"taskName": "Task Name 00",
-					"taskDescription": "Description 00",
-					"uid": "B01000000000000000000",
-					"authHours": 40,
-					"time": [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]
-				}]
-			}
-			
-		beforeEach(inject(function($controller) {
-			spyOn(mockApi, 'call').andCallThrough();
-			ctrl = $controller('enterTimeController', {$scope: scope, Api: mockApi});
-		
-			getAllDeferred.resolve(mockApiResponsePeriod);
+		beforeEach(inject(function() {
+			getAllDeferred.resolve(angular.copy(mockApiResponsePeriod));
 			rootScope.$apply();
-			getOneByParamsDeferred.resolve(mockApiResponseTimeFirst);
+			getOneByParamsDeferred.resolve(angular.copy(mockApiResponseTimeEmpty));
 			rootScope.$apply();
-			getOneByParamsDeferred.resolve(mockApiResponseTimeSecond);
+			getOneByParamsDeferred.resolve(angular.copy(mockApiResponseTime));
 			rootScope.$apply();
 		}));
 		
@@ -171,63 +146,23 @@ describe('enterTimeController', function() {
 			expect(mockApi.call.callCount).toBe(3);
 		});
 		
-		it('should set $scope.periodTasks and $scope.timeId from time response', function() {
-			expect(scope.periodTasks).toEqual(mockApiResponseTimeSecond.tasks);
-			expect(scope.timeId).toEqual(mockApiResponseTimeSecond._id);
-		});
-		
 		it('should clear all $scope.periodTasks time and authHour entries', function() {
 			expect(scope.periodTasks[0].time.length).toBe(0);
 			expect(scope.periodTasks[0].authHours).toEqual(null);
 		});
 	});
 	
-	describe('user driven events', function() {
-		var mockApiResponsePeriod = [
-			{
-				"_id": "period1",
-				"title": "June 2013 P1",
-				"startDate": "2013-06-01T04:00:00.000Z",
-				"endDate": "2013-06-15T04:00:00.000Z",
-				"days": 15
-			},
-			{
-				"_id": "period2",
-				"title": "June 2013 P2",
-				"startDate": "2013-06-16T04:00:00.000Z",
-				"endDate": "2013-06-30T04:00:00.000Z",
-				"days": 15
-			}];
-			
-		var mockApiResponseTime = {
-			"_id": "time1",
-			"user_id": "user1",
-			"period_id": "period2",
-			"tasks": [
-				{
-					"isAbsense": false,
-					"task_id": "52f78dcf4293916d8c8c281d",
-					"taskName": "Task Name 00",
-					"taskDescription": "Description 00",
-					"uid": "B01000000000000000000",
-					"authHours": 40,
-					"time": [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]
-				}]
-			}
-			
-		beforeEach(inject(function($controller) {
-			spyOn(mockApi, 'call').andCallThrough();
-			ctrl = $controller('enterTimeController', {$scope: scope, Api: mockApi});
-		
-			getAllDeferred.resolve(mockApiResponsePeriod);
-			rootScope.$apply();
-			getOneByParamsDeferred.resolve(mockApiResponseTime);
-			rootScope.$apply();
+	describe('user driven events', function() {			
+		beforeEach(inject(function() {
 		}));
 		
 		describe('selected period changes', function(){
 			beforeEach(inject(function() {
-				scope.period = {_id: '123'};
+				getAllDeferred.resolve(angular.copy(mockApiResponsePeriod));
+				rootScope.$apply();
+				getOneByParamsDeferred.resolve(angular.copy(mockApiResponseTime));
+				rootScope.$apply();
+				
 				spyOn(scope, 'changePeriod').andCallThrough();
 				scope.changePeriod();
 			}));
@@ -243,17 +178,48 @@ describe('enterTimeController', function() {
 		});
 	});
 	
-	// it('should properly sum the hours for a given day', function() {
-	// });
-	
-	// it('should sum the hours for a given task', function() {
-	// });
-	
-	// it('should sum the total hours for all tasks in a given period', function() {
-	// });
-	
-	// it('should sum the total authorized hours for all tasks in a given period', function() {
-	// });
+	describe('page-load calculations', function() {
+		beforeEach(inject(function() {
+			getAllDeferred.resolve(angular.copy(mockApiResponsePeriod));
+			rootScope.$apply();
+			getOneByParamsDeferred.resolve(angular.copy(mockApiResponseTime));
+			rootScope.$apply();
+		}));
+		
+		it('should properly sum the hours for a given day', function() {
+			spyOn(scope, 'sumHoursDay').andCallThrough();
+			var result = scope.sumHoursDay(1);
+			
+			expect(scope.sumHoursDay).toHaveBeenCalled();
+			expect(result).toBe(5);
+		});
+		
+		it('should sum the hours for a given task', function() {
+			spyOn(scope, 'sumHoursTask').andCallThrough();
+			var result1 = scope.sumHoursTask(mockApiResponseTime.tasks[0]);
+			var result2 = scope.sumHoursTask(mockApiResponseTime.tasks[1]);
+			
+			expect(scope.sumHoursTask.callCount).toBe(2);
+			expect(result1).toBe(30);
+			expect(result2).toBe(29.75);
+		});
+		
+		it('should sum the total hours for all tasks in a given period', function() {
+			spyOn(scope, 'sumTotalHours').andCallThrough();
+			var result = scope.sumTotalHours();
+			
+			expect(scope.sumTotalHours).toHaveBeenCalled();
+			expect(result).toBe(59.75);
+		});
+		
+		it('should sum the total authorized hours for all tasks in a given period', function() {
+			spyOn(scope, 'sumAuthHours').andCallThrough();
+			var result = scope.sumAuthHours();
+			
+			expect(scope.sumAuthHours).toHaveBeenCalled();
+			expect(result).toBe(65);
+		});
+	});
 	
 	// it('should make an update call when saved', function() {
 	// });
