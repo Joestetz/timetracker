@@ -176,6 +176,28 @@ describe('enterTimeController', function() {
 				expect(mockApi.call.callCount).toBe(3);
 			});
 		});
+		
+		describe('save time', function() {
+			expect(true).toBe(false);
+		});
+		
+		describe('submit time', function() {
+			expect(true).toBe(false);
+			// var alert_msg;
+			// spyOn(window, 'alert').andCallFake(function(msg) {
+				// alert_msg = msg;
+			// });
+			
+			// spyOn(scope, 'submitTime').andCallThrough();
+			// scope.submitTime();
+			
+			// expect(scope.submitTime).toHaveBeenCalled();
+			// expect(alert_msg).toBe("Not implemented.");
+		});
+		
+		describe('delete time', function() {
+			expect(true).toBe(false);
+		});
 	});
 	
 	describe('page-load calculations', function() {
@@ -220,13 +242,4 @@ describe('enterTimeController', function() {
 			expect(result).toBe(65);
 		});
 	});
-	
-	// it('should make an update call when saved', function() {
-	// });
-	
-	// it('should alert the user when time is submitted', function() {
-	// });
-	
-	// it('should delete a task from the given period when prompted', function() {
-	// });
 });
