@@ -1,4 +1,4 @@
-echo off
+@echo off
 
 REM use path from existing directory if a mongo.exe path is not received
 

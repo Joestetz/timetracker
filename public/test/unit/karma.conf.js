@@ -16,6 +16,7 @@ module.exports = function(config) {
     files: [
 	  'test/unit/lib/angular.js',
 	  'test/unit/lib/angular-*.js',
+	  'test/unit/lib/jquery-1.11.0.min.js',
       'js/main.js',
 	  'js/directives.js',
 	  'js/services.js',
