@@ -171,7 +171,7 @@ timeTracker.config(['$routeProvider',
 			};
 			
 			$scope.submitTime = function() {
-				alert("Not implemented.");
+				alert('Not implemented.');
 			};
 			
 			$scope.deleteTime = function(taskId) {

@@ -159,13 +159,22 @@ describe('enterTimeController', function() {
 			});
 		});
 		
-		// describe('save time', function() {
-			// beforeEach(inject(function() {
-			// }));
+		describe('save time', function() {
+			beforeEach(inject(function() {
+				spyOn(scope, 'saveTime').andCallThrough();
+				scope.saveTime();
+			}));
 			
-			// it('should fetch new data', function() {
-			// });
-		// });
+			it('should PUT data to server', function() {
+				httpMock.expectPUT('/api/time/time1', mockApiResponseTime.tasks).respond(200, mockApiResponseTime);
+				ctrl = controllerSvc('enterTimeController', {$scope: scope});
+				httpMock.flush();
+			});
+			
+			it('should call saveTime', function() {
+				expect(scope.saveTime).toHaveBeenCalled();
+			});
+		});
 		
 		describe('user submits time', function() {
 			it('should alert user of not being implemented yet', function() {
@@ -178,12 +187,41 @@ describe('enterTimeController', function() {
 				scope.submitTime();
 				
 				expect(scope.submitTime).toHaveBeenCalled();
-				expect(alert_msg).toBe("Not implemented.");
+				expect(alert_msg).toBe('Not implemented.');
 			});
 		});
 		
-		// describe('delete time', function() {
-		// });
+		describe('delete time', function() {			
+			it('should prompt the user to confirm deletion', function() {
+				var confirm_msg;
+				spyOn(window, 'confirm').andCallFake(function(msg) {
+					confirm_msg = msg;
+					return false;
+				});
+				spyOn(scope, 'deleteTime').andCallThrough();
+				scope.deleteTime('task0');
+				expect(confirm_msg).toBe('Are you sure you want to delete this row?');
+			});
+			
+			it('should remove a row from periodTasks', function() {
+				spyOn(window, 'confirm').andReturn(true);
+				spyOn(scope, 'deleteTime').andCallThrough();
+				scope.deleteTime('task0');
+			
+				var arr = new Array();
+				arr.push(mockApiResponseTime.tasks[1]);
+				expect(scope.periodTasks.length).toBe(1);
+				expect(scope.periodTasks).toEqual(arr);
+			});
+			
+			it('should call deleteTime', function() {
+				spyOn(window, 'confirm').andReturn(true);
+				spyOn(scope, 'deleteTime').andCallThrough();
+				scope.deleteTime('task0');
+				
+				expect(scope.deleteTime).toHaveBeenCalled();
+			});
+		});
 	});
 	
 	describe('page-load calculations', function() {
