@@ -26,7 +26,7 @@ describe('headerController test', function() {
 });
 
 describe('enterTimeController', function() {
-	var rootScope, scope, ctrl, api, $q, mockApi;
+	var scope, controllerSvc, httpMock;
 	
 	var mockApiResponsePeriod = [
 		{
@@ -78,51 +78,30 @@ describe('enterTimeController', function() {
 	}
 	
 	beforeEach(module('timeTracker'));
-	beforeEach(inject(function($rootScope, $controller, _$q_) {
-		rootScope = $rootScope;
+	beforeEach(inject(function($rootScope, $controller, $httpBackend) {
 		scope = $rootScope.$new();
-		$q = _$q_;
-		
-		mockApi = {
-			call: function(route) {
-				return {
-					getAll: function() {
-						getAllDeferred = $q.defer();
-						return {$promise: getAllDeferred.promise};
-					},
-					getOneByParams: function() {
-						getOneByParamsDeferred = $q.defer();
-						return {$promise: getOneByParamsDeferred.promise};
-					}
-				};
-			}
-		}
-		
-		spyOn(mockApi, 'call').andCallThrough();
-		ctrl = $controller('enterTimeController', {$scope: scope, Api: mockApi});
+		controllerSvc = $controller;
+		httpMock = $httpBackend;
 	}));
 	
 	describe('initial data call -- with time', function() {
 		beforeEach(inject(function() {
-			getAllDeferred.resolve(angular.copy(mockApiResponsePeriod));
-			rootScope.$apply();
-			getOneByParamsDeferred.resolve(angular.copy(mockApiResponseTime));
-			rootScope.$apply();
+			httpMock.whenGET('/api/periods').respond(mockApiResponsePeriod)
+			httpMock.whenGET('/api/time?period=period1&user=52f78c914293916d8c8c281b').respond(mockApiResponseTime)
+			ctrl = controllerSvc('enterTimeController', {$scope: scope});
+			httpMock.flush();
 		}));
 		
-		it('should query for periods', function() {
-			expect(mockApi.call).toHaveBeenCalledWith('/api/periods');
-			expect(mockApi.call.callCount).toBe(2);
+		it('should query for period and time', function() {
+			httpMock.expectGET('/api/periods');
+			httpMock.expectGET('/api/time?period=period1&user=52f78c914293916d8c8c281b');
+			ctrl = controllerSvc('enterTimeController', {$scope: scope});
+			httpMock.flush();
 		});
 		
 		it('should set $scope.periods and $scope.period from period response', function() {
-			expect(scope.periods).toEqual(mockApiResponsePeriod);
-			expect(scope.period).toEqual(mockApiResponsePeriod[0]);
-		});
-		
-		it('should query for time', function() {
-			expect(mockApi.call).toHaveBeenCalledWith('/api/time');
-			expect(mockApi.call.callCount).toBe(2);
+			expect(JSON.stringify(scope.periods)).toEqual(JSON.stringify(mockApiResponsePeriod));
+			expect(JSON.stringify(scope.period)).toEqual(JSON.stringify(mockApiResponsePeriod[0]));
 		});
 		
 		it('should set $scope.periodTasks and $scope.timeId from time response', function() {
@@ -133,17 +112,19 @@ describe('enterTimeController', function() {
 	
 	describe('initial data call -- without time', function() {
 		beforeEach(inject(function() {
-			getAllDeferred.resolve(angular.copy(mockApiResponsePeriod));
-			rootScope.$apply();
-			getOneByParamsDeferred.resolve(angular.copy(mockApiResponseTimeEmpty));
-			rootScope.$apply();
-			getOneByParamsDeferred.resolve(angular.copy(mockApiResponseTime));
-			rootScope.$apply();
+			httpMock.whenGET('/api/periods').respond(mockApiResponsePeriod)
+			httpMock.whenGET('/api/time?period=period1&user=52f78c914293916d8c8c281b').respond(mockApiResponseTimeEmpty)
+			httpMock.whenGET('/api/time?period=period2&user=52f78c914293916d8c8c281b').respond(mockApiResponseTime)
+			ctrl = controllerSvc('enterTimeController', {$scope: scope});
+			httpMock.flush();
 		}));
 		
-		it('should query for time twice', function() {
-			expect(mockApi.call).toHaveBeenCalledWith('/api/time');
-			expect(mockApi.call.callCount).toBe(3);
+		it('should query for period and time, with time being called twice', function() {
+			httpMock.expectGET('/api/periods');
+			httpMock.expectGET('/api/time?period=period1&user=52f78c914293916d8c8c281b');
+			httpMock.expectGET('/api/time?period=period2&user=52f78c914293916d8c8c281b');
+			ctrl = controllerSvc('enterTimeController', {$scope: scope});
+			httpMock.flush();
 		});
 		
 		it('should clear all $scope.periodTasks time and authHour entries', function() {
@@ -154,58 +135,63 @@ describe('enterTimeController', function() {
 	
 	describe('user driven events', function() {			
 		beforeEach(inject(function() {
+			httpMock.whenGET('/api/periods').respond(mockApiResponsePeriod)
+			httpMock.whenGET('/api/time?period=period1&user=52f78c914293916d8c8c281b').respond(mockApiResponseTime)
+			ctrl = controllerSvc('enterTimeController', {$scope: scope});
+			httpMock.flush();
 		}));
 		
-		describe('selected period changes', function(){
+		describe('selected period changes', function(){	
 			beforeEach(inject(function() {
-				getAllDeferred.resolve(angular.copy(mockApiResponsePeriod));
-				rootScope.$apply();
-				getOneByParamsDeferred.resolve(angular.copy(mockApiResponseTime));
-				rootScope.$apply();
-				
+				scope.period._id = 'changedPeriodId';
 				spyOn(scope, 'changePeriod').andCallThrough();
 				scope.changePeriod();
 			}));
+		
+			it('should fetch new data when selected period changes', function() {
+				httpMock.expectGET('/api/time?period=changedPeriodId&user=52f78c914293916d8c8c281b').respond(200);
+				ctrl = controllerSvc('enterTimeController', {$scope: scope});
+				httpMock.flush();
+			});
 			
 			it('should call changePeriod', function() {
 				expect(scope.changePeriod).toHaveBeenCalled();
 			});
+		});
 		
-			it('should fetch new data when selected period changes', function() {
-				expect(mockApi.call).toHaveBeenCalledWith('/api/time');
-				expect(mockApi.call.callCount).toBe(3);
+		// describe('save time', function() {
+			// beforeEach(inject(function() {
+			// }));
+			
+			// it('should fetch new data', function() {
+			// });
+		// });
+		
+		describe('user submits time', function() {
+			it('should alert user of not being implemented yet', function() {
+				var alert_msg;
+				spyOn(window, 'alert').andCallFake(function(msg) {
+					alert_msg = msg;
+				});
+				
+				spyOn(scope, 'submitTime').andCallThrough();
+				scope.submitTime();
+				
+				expect(scope.submitTime).toHaveBeenCalled();
+				expect(alert_msg).toBe("Not implemented.");
 			});
 		});
 		
-		describe('save time', function() {
-			expect(true).toBe(false);
-		});
-		
-		describe('submit time', function() {
-			expect(true).toBe(false);
-			// var alert_msg;
-			// spyOn(window, 'alert').andCallFake(function(msg) {
-				// alert_msg = msg;
-			// });
-			
-			// spyOn(scope, 'submitTime').andCallThrough();
-			// scope.submitTime();
-			
-			// expect(scope.submitTime).toHaveBeenCalled();
-			// expect(alert_msg).toBe("Not implemented.");
-		});
-		
-		describe('delete time', function() {
-			expect(true).toBe(false);
-		});
+		// describe('delete time', function() {
+		// });
 	});
 	
 	describe('page-load calculations', function() {
 		beforeEach(inject(function() {
-			getAllDeferred.resolve(angular.copy(mockApiResponsePeriod));
-			rootScope.$apply();
-			getOneByParamsDeferred.resolve(angular.copy(mockApiResponseTime));
-			rootScope.$apply();
+			httpMock.whenGET('/api/periods').respond(mockApiResponsePeriod)
+			httpMock.whenGET('/api/time?period=period1&user=52f78c914293916d8c8c281b').respond(mockApiResponseTime)
+			ctrl = controllerSvc('enterTimeController', {$scope: scope});
+			httpMock.flush();
 		}));
 		
 		it('should properly sum the hours for a given day', function() {
